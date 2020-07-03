@@ -30,7 +30,7 @@ import App from '../App';
 const apiMock = new MockAdapter(api);
 
 const wait = (amount = 0): Promise<void> => {
-  return new Promise((resolve) => setTimeout(resolve, amount));
+  return new Promise(resolve => setTimeout(resolve, amount));
 };
 
 const actWait = async (amount = 0): Promise<void> => {
@@ -108,7 +108,7 @@ describe('Dashboard', () => {
   });
 
   it('should be able to list the transactions', async () => {
-    const { getByText } = render(<App />);
+    const { getByText, debug } = render(<App />);
 
     apiMock.onGet('transactions').reply(200, {
       transactions: [
@@ -166,6 +166,8 @@ describe('Dashboard', () => {
     });
 
     await actWait();
+
+    debug();
 
     expect(getByText('Loan')).toBeTruthy();
     expect(getByText('R$ 1.500,00')).toBeTruthy();
